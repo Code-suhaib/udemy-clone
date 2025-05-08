@@ -1,0 +1,39 @@
+.hero-section {
+    background-image: url("/public/hero.jpg"); /* Replace with hero background image */
+    background-size: cover;
+    background-position: center;
+    height: 750px;
+    color: #1c1d1f;
+  }
+  
+  .hero-content {
+    max-width: 600px;
+    background-color: rgba(255, 255, 255, 0.9); /* Light background for readability */
+    border-radius: 8px;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .hero-search .form-control {
+    border-radius: 0;
+  }
+  
+  .hero-search .btn {
+    border-radius: 0;
+  }
+  
+  @media (min-width: 768px) {
+    .hero-title {
+      font-size: 2.5rem;
+    }
+    .hero-subtitle {
+      font-size: 1.2rem;
+    }
+  }
+  
