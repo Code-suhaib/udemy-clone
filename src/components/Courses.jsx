@@ -11,7 +11,7 @@ const CoursesPage = () => {
       instructor: "John Doe",
       price: 19.99,
       rating: 4.8,
-      thumbnail: "https://via.placeholder.com/300x180?text=React+for+Beginners",
+      thumbnail: "./react.png",
       category: "Development",
     },
     {
@@ -20,7 +20,7 @@ const CoursesPage = () => {
       instructor: "Jane Smith",
       price: 24.99,
       rating: 4.7,
-      thumbnail: "https://via.placeholder.com/300x180?text=Master+UI+Design",
+      thumbnail: "./ui.png",
       category: "Design",
     },
     {
@@ -29,72 +29,72 @@ const CoursesPage = () => {
       instructor: "Michael Johnson",
       price: 29.99,
       rating: 4.9,
-      thumbnail: "https://via.placeholder.com/300x180?text=Python+Bootcamp",
+      thumbnail: "./python.png",
       category: "Development",
     },
     {
-    id: 4,
-    title: "Photography Masterclass",
-    instructor: "Sarah Lee",
-    price: "$19.99",
-    rating: 4.5,
-    thumbnail: "https://via.placeholder.com/300x180?text=Photography+Masterclass",
-    category: "Design",
-  },
-  {
-    id: 5,
-    title: "Marketing 101: Digital Strategies",
-    instructor: "David Clark",
-    price: "$22.99",
-    rating: 4.6,
-    thumbnail: "https://via.placeholder.com/300x180?text=Marketing+101",
-    category: "Marketing",
-  },
-  {
-    id: 6,
-    title: "Build Modern Websites with HTML & CSS",
-    instructor: "Emily White",
-    price: "$17.99",
-    rating: 4.8,
-    thumbnail: "https://via.placeholder.com/300x180?text=Modern+Websites",
-    category: "Development",
-  },
-  {
-    id: 7,
-    title: "Intro to Data Science with R",
-    instructor: "James Brown",
-    price: "$34.99",
-    rating: 4.7,
-    thumbnail: "https://via.placeholder.com/300x180?text=Data+Science+with+R",
-    category: "Data Science",
-  },
-  {
-    id: 8,
-    title: "Business Strategies for Success",
-    instructor: "Karen Green",
-    price: "$21.99",
-    rating: 4.4,
-    thumbnail: "https://via.placeholder.com/300x180?text=Business+Strategies",
-    category: "Business",
-  },
-  {
-    id: 9,
-    title: "Advanced JavaScript Techniques",
-    instructor: "Chris Davis",
-    price: "$27.99",
-    rating: 4.8,
-    thumbnail: "https://via.placeholder.com/300x180?text=Advanced+JavaScript",
-    category: "Development",
-  },
-  {
-    id: 10,
-    title: "UX/UI Design for Mobile Apps",
-    instructor: "Olivia Thomas",
-    price: "$24.99",
-    rating: 4.6,
-    thumbnail: "https://via.placeholder.com/300x180?text=UX+UI+for+Mobile",
-    category: "Design",
-  },
+      id: 4,
+      title: "Photography Masterclass",
+      instructor: "Sarah Lee",
+      price: "$19.99",
+      rating: 4.5,
+      thumbnail: "./photo.jpg",
+      category: "Design",
+    },
+    {
+      id: 5,
+      title: "Marketing 101: Digital Strategies",
+      instructor: "David Clark",
+      price: "$22.99",
+      rating: 4.6,
+      thumbnail: "marketing.webp",
+      category: "Marketing",
+    },
+    {
+      id: 6,
+      title: "Build Modern Websites with HTML & CSS",
+      instructor: "Emily White",
+      price: "$17.99",
+      rating: 4.8,
+      thumbnail: "html.webp",
+      category: "Development",
+    },
+    {
+      id: 7,
+      title: "Intro to Data Science with R",
+      instructor: "James Brown",
+      price: "$34.99",
+      rating: 4.7,
+      thumbnail: "data.jpg",
+      category: "Data Science",
+    },
+    {
+      id: 8,
+      title: "Business Strategies for Success",
+      instructor: "Karen Green",
+      price: "$21.99",
+      rating: 4.4,
+      thumbnail: "bussiness.png",
+      category: "Business",
+    },
+    {
+      id: 9,
+      title: "Advanced JavaScript Techniques",
+      instructor: "Chris Davis",
+      price: "$27.99",
+      rating: 4.8,
+      thumbnail: "./JavaScript.png",
+      category: "Development",
+    },
+    {
+      id: 10,
+      title: "UX/UI Design for Mobile Apps",
+      instructor: "Olivia Thomas",
+      price: "$24.99",
+      rating: 4.6,
+      thumbnail: "./ui ux.webp",
+      category: "Design",
+    },
     // Add more courses as needed
   ];
 
@@ -133,13 +133,20 @@ const CoursesPage = () => {
           <option>Popularity</option>
         </Form.Select>
       </div>
-      
+
       {/* Render sorted courses */}
       <div className="row">
         {sortedCourses.map((course) => (
           <div key={course.id} className="col-md-4 mb-4">
             <Card>
-              <Card.Img variant="top" src={course.thumbnail} />
+              <Card.Img
+                variant="top"
+                src={course.thumbnail}
+                style={{
+                  height: "180px",  // Set height for consistent image size
+                  objectFit: "cover",  // Ensure images don't get distorted
+                }}
+              />
               <Card.Body>
                 <Card.Title>{course.title}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">{course.instructor}</Card.Subtitle>
