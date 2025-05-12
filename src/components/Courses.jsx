@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+// CoursesPage.js
+import React, { useState, useEffect } from "react";
 import { Container, Form, Card, Button } from "react-bootstrap";
+import { FaHeart, FaRegHeart } from "react-icons/fa"; // Icons for wishlist
+import { useNavigate } from "react-router-dom";
 
 const CoursesPage = () => {
   const [sortOption, setSortOption] = useState("Sort by");
+  const [wishlist, setWishlist] = useState(() => {
+    // Load wishlist from localStorage
+    const saved = localStorage.getItem("wishlist");
+    return saved ? JSON.parse(saved) : [];
+  });
 
-  const courses = [
-    {
+  const navigate = useNavigate();
+
+  const courses = [ {
       id: 1,
       title: "React for Beginners",
       instructor: "John Doe",
@@ -95,38 +104,44 @@ const CoursesPage = () => {
       thumbnail: "./ui ux.webp",
       category: "Design",
     },
-    // Add more courses as needed
-  ];
+];
 
-  const handleSortChange = (event) => {
-    setSortOption(event.target.value);
-  };
+  const handleSortChange = (event) => setSortOption(event.target.value);
 
-  // Function to sort courses based on the selected option
   const sortCourses = (courses, option) => {
     switch (option) {
       case "Price: Low to High":
-        return courses.sort((a, b) => a.price - b.price);
+        return courses.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
       case "Price: High to Low":
-        return courses.sort((a, b) => b.price - a.price);
+        return courses.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
       case "Popularity":
-        return courses.sort((a, b) => b.rating - a.rating); // Assuming higher rating means more popularity
+        return courses.sort((a, b) => b.rating - a.rating);
       default:
         return courses;
     }
   };
 
-  const sortedCourses = sortCourses(courses, sortOption);
+  const sortedCourses = sortCourses([...courses], sortOption);
+
+  const toggleWishlist = (course) => {
+    const exists = wishlist.find((item) => item.id === course.id);
+    let updated;
+    if (exists) {
+      updated = wishlist.filter((item) => item.id !== course.id);
+    } else {
+      updated = [...wishlist, course];
+    }
+    setWishlist(updated);
+    localStorage.setItem("wishlist", JSON.stringify(updated));
+  };
+
+  const isWishlisted = (id) => wishlist.some((course) => course.id === id);
 
   return (
     <Container className="my-5">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h2>All Courses</h2>
-        <Form.Select
-          style={{ width: "200px" }}
-          value={sortOption}
-          onChange={handleSortChange}
-        >
+        <Form.Select style={{ width: "200px" }} value={sortOption} onChange={handleSortChange}>
           <option>Sort by</option>
           <option>Price: Low to High</option>
           <option>Price: High to Low</option>
@@ -134,28 +149,41 @@ const CoursesPage = () => {
         </Form.Select>
       </div>
 
-      {/* Render sorted courses */}
       <div className="row">
         {sortedCourses.map((course) => (
           <div key={course.id} className="col-md-4 mb-4">
             <Card>
-              <Card.Img
-                variant="top"
-                src={course.thumbnail}
-                style={{
-                  height: "180px",  // Set height for consistent image size
-                  objectFit: "cover",  // Ensure images don't get distorted
-                }}
-              />
+              <div style={{ position: "relative" }}>
+                <Card.Img
+                  variant="top"
+                  src={course.thumbnail}
+                  style={{ height: "180px", objectFit: "cover" }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 10,
+                    right: 10,
+                    cursor: "pointer",
+                    color: isWishlisted(course.id) ? "red" : "#ccc",
+                    fontSize: "1.5rem",
+                  }}
+                  onClick={() => toggleWishlist(course)}
+                >
+                  {isWishlisted(course.id) ? <FaHeart /> : <FaRegHeart />}
+                </div>
+              </div>
               <Card.Body>
                 <Card.Title>{course.title}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">{course.instructor}</Card.Subtitle>
                 <Card.Text>
-                  <strong>Price: </strong>{course.price} <br />
-                  <strong>Rating: </strong>{course.rating} <br />
-                  <strong>Category: </strong>{course.category}
+                  <strong>Price:</strong> {course.price} <br />
+                  <strong>Rating:</strong> {course.rating} <br />
+                  <strong>Category:</strong> {course.category}
                 </Card.Text>
-                <Button variant="primary">View Course</Button>
+                <Button variant="primary" onClick={() => navigate(`/courses/${course.id}`)}>
+                  View Course
+                </Button>
               </Card.Body>
             </Card>
           </div>

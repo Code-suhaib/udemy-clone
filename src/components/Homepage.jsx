@@ -1,5 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import CoursesPage from './Courses';
 
 const categories = ['Development', 'Business', 'IT & Software', 'Design', 'Marketing'];
 const featuredCourses = [
@@ -71,10 +72,14 @@ export default function HomepagePanelLayout() {
               <div className="card-body">
                 <p className="card-text fw-medium">{title}</p>
               </div>
+            
             </div>
+
           ))}
         </div>
       </div>
+  <CoursesPage/>
     </div>
+
   );
 }
